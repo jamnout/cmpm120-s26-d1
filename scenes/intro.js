@@ -1,14 +1,18 @@
-class AdamGame extends Phaser.Scene {
+class Intro extends Phaser.Scene {
     constructor() {
-        super('intro');
+        super('introScene');
     }
     preload(){
         this.load.path = 'assets/';
+        this.load.audio('testSong', 'intro-test.mp3');
         this.load.font('introFont', 'Moonlighting.ttf');
-        //preload imgs / music here
     }
     create(){
         this.graphics = this.add.graphics();
+
+        const jingle = this.sound.play('testSong', {
+            volume: 0.6
+        });
 
         this.TitleA = this.add.text(
             115,
@@ -35,7 +39,7 @@ class AdamGame extends Phaser.Scene {
             delay: 2600,
         });
 
-        this.graphics.fillStyle(0xAA79D1, .6); //yellow
+        this.graphics.fillStyle(0xAA79D1, .6); //purple
         const sh1 = this.graphics.fillEllipse(540, 360, 230, 200, 30);
         
         this.graphics.fillStyle(0xDB0F0F, .7); //red
@@ -60,20 +64,12 @@ class AdamGame extends Phaser.Scene {
             easeParams: [50],
         });
 
-
-
+        this.time.delayedCall(6000, () => {
+            this.cameras.main.fadeOut(2000);
+            this.cameras.main.on('camerafadeoutcomplete', () => {
+                this.scene.switch('titleScene'); // switch
+            })
+        })
     }
-    update(){
-
-    }
+    update(){}
 }
-
-let config = {
-    type: Phaser.WEBGL,
-    width: 800,
-    height: 600,
-    backgroundColor: 0x000000,
-    scene: [AdamGame],
-}
-
-let game = new Phaser.Game(config);
