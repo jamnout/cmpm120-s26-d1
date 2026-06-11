@@ -48,7 +48,7 @@ class Title extends Phaser.Scene {
             delay: 2400,
             duration: 0,
         })
-        let chain = scene.tweens.chain({
+        let chain = this.tweens.chain({
             targets: this.title2,
             tweens: [
                 {
